@@ -1,0 +1,30 @@
+{
+  "name": "streaming",
+  "version": "0.2.1",
+  "description": "Transforms and other streaming helpers",
+  "keywords": [
+    "streaming",
+    "streams",
+    "streams2",
+    "transform",
+    "duplex",
+    "readable",
+    "writable"
+  ],
+  "homepage": "https://github.com/chbrown/streaming",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chbrown/streaming.git"
+  },
+  "author": "Christopher Brown <io@henrian.com>",
+  "license": "MIT",
+  "dependencies": {
+    "glob": "*"
+  },
+  "devDependencies": {
+    "tap": "*"
+  },
+  "scripts": {
+    "test": "tap test"
+  }
+}
