@@ -1,4 +1,4 @@
-'use strict'; /*jslint es5: true, node: true, indent: 2 */ /* globals setImmediate */
+'use strict'; /*jslint es5: true, node: true, indent: 2 */
 
 exports.Glob = require('./lib/glob');
 exports.json = require('./lib/json'); // for json.Parser and json.Stringifier
