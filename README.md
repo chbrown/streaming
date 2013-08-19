@@ -1,6 +1,6 @@
 # streaming
 
-A few stream helpers, abiding by the new-style Node.js stream standards.
+A few stream helpers, abiding by the new-style Node.js stream standards ("Streams2").
 
     npm install streaming
 
@@ -17,6 +17,8 @@ A few stream helpers, abiding by the new-style Node.js stream standards.
 `new Stringifier(replacer, space)` inherits `streaming.Splitter`
 
 * objectMode: false
+  * _writableState.objectMode: false
+  * _readableState.objectMode: true
 
 
 ### `streaming.json.Parser`
@@ -80,6 +82,37 @@ Very similar to `streaming.Line`, but more configurable.
 
 `new Timeout(seconds, opts)` inherits `stream.Transform`
 
+
+### `stream.Transform(opts)` results:
+
+| opts. decodeStrings | opts. objectMode | _writableState. decodeStrings | _writableState. objectMode | _readableState. objectMode |
+|:----|:----|:----|:----|:----|
+| true | true | true | true | true |
+| false | true | false | true | true |
+| undefined | true | true | true | true |
+| true | false | true | false | false |
+| false | false | false | false | false |
+| undefined | false | true | false | false |
+| true | undefined | true | false | false |
+| false | undefined | false | false | false |
+| undefined | undefined | true | false | false |
+
+<!--
+// only _writableState has a decodeStrings field
+var booleans = [true, false, undefined];
+function log_row(values) { console.log('| ' + values.join(' | ') + ' |'); };
+(function() {
+  log_row(['decodeStrings', 'objectMode',
+    '_writableState.decodeStrings', '_writableState.objectMode', '_readableState.objectMode']);
+  booleans.forEach(function(objectMode) {
+    booleans.forEach(function(decodeStrings) {
+      var t = new stream.Transform({objectMode: objectMode, decodeStrings: decodeStrings});
+      log_row([decodeStrings, objectMode,
+        t._writableState.decodeStrings, t._writableState.objectMode, t._readableState.objectMode]);
+    });
+  })
+})();
+-->
 
 ## License
 
