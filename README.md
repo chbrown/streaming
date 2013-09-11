@@ -28,14 +28,6 @@ A few stream helpers, abiding by the new-style Node.js stream standards ("Stream
 * objectMode: true
 
 
-### `streaming.Line`
-
-`new Line()` inherits `stream.Transform`
-
-* _writableState.objectMode: false
-* _readableState.objectMode: true
-
-
 ### `streaming.Mapper`
 
 `new Mapper(fn)` inherits `stream.Transform`
@@ -64,7 +56,7 @@ var lazy_worker = function(task, callback) {
 };
 
 process.stdin
-.pipe(new streaming.Line())
+.pipe(new streaming.Splitter())
 .pipe(new streaming.Mapper(JSON.parse))
 .pipe(new streaming.Queue(5, lazy_worker))
 .pipe(process.stdout);
@@ -73,7 +65,7 @@ process.stdin
 
 ### `streaming.Splitter`
 
-Very similar to `streaming.Line`, but more configurable.
+What used to be `streaming.Line` and `Rechunker` have been folder into this more generic, more flexible class.
 
 `new Splitter(split, opts)` inherits `stream.Transform`
 
