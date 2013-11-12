@@ -2,9 +2,8 @@
 
 exports.Glob = require('./lib/glob');
 exports.json = require('./lib/json'); // for json.Parser and json.Stringifier
-exports.Filter = require('./lib/filter');
 exports.Mapper = require('./lib/mapper');
-exports.Omitter = require('./lib/omitter');
+exports.property = require('./lib/property'); // for property.Filter and property.Omitter
 exports.Queue = require('./lib/queue');
 exports.Splitter = require('./lib/splitter');
 exports.Timeout = require('./lib/timeout');
