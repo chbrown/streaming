@@ -43,6 +43,7 @@ tap.test('json.Stringifier', function(t) {
 });
 
 tap.test('Walk', function(t) {
+  // this test needs work, like real recursion
   var lib_path = path.join(__dirname, '..', 'lib');
   fs.realpath(lib_path, function(err, package_root) {
     var walk = new streaming.Walk(package_root);
