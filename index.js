@@ -17,7 +17,7 @@ exports.readToEnd = function(stream, callback) {
 
   For example, to read all STDIN:
 
-      streaming.readToEnd(sys.stdin, function(err, chunks) {
+      streaming.readToEnd(process.stdin, function(err, chunks) {
         if (err) throw err;
 
         var input = chunks.join('');
