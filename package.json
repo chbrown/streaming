@@ -1,6 +1,6 @@
 {
   "name": "streaming",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "Transforms and other streaming helpers",
   "keywords": [
     "streaming",
