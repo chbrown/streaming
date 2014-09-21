@@ -10,6 +10,32 @@ tap.test('import', function(t) {
   t.end();
 });
 
+tap.test('Splitter', function(t) {
+  var splitter = new streaming.Splitter();
+  splitter.setEncoding('utf8');
+
+  splitter.write('Andy\nBarb');
+  splitter.write('ara\nCarson');
+  splitter.write('\n');
+  splitter.write('Destiny\nEdvard\nFinnigan\nGerry\nHod');
+  splitter.write('g');
+  splitter.write('son');
+  splitter.write('\n');
+  splitter.write('Ivory\nJenn');
+  splitter.write('a');
+  splitter.end();
+
+  streaming.readToEnd(splitter, function(err, chunks) {
+    if (err) throw err;
+
+    t.equal(chunks.length, 10, 'There should be 10 lines');
+    t.equal(chunks[7], 'Hodgson', 'The sixth line should be "Hodgson"');
+    t.equal(chunks[9], 'Jenna', 'The tenth line should be "Jenna"');
+    t.end();
+  });
+});
+
+
 tap.test('json.Parser', function(t) {
   var parser = new streaming.json.Parser();
   parser.write('{"a": 100}\n{"a": 101, "b": 201}\n');
