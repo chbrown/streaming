@@ -1,13 +1,22 @@
 # streaming
 
-A few stream helpers, abiding by the new-style Node.js stream standards ("Streams2").
+A few stream helpers, built for Node.js 0.10+ streams ("Streams2").
 
     npm install streaming
+
+* [Glob](#glob)
 
 
 ### `streaming.Glob`
 
 `new Glob(pattern, options)` inherits `stream.Readable`
+
+* _readableState.objectMode: true
+
+
+### `streaming.Filter`
+
+`new Filter(predicate)` inherits `stream.Readable`
 
 * _readableState.objectMode: true
 
@@ -87,7 +96,6 @@ It recurses the filesystem structure depth-first. If the given `root` is not a d
 ```javascript
 var streaming = require('streaming');
 
-var streaming = require('./');
 var walk = new streaming.Walk('/usr/local');
 walk.on('error', function(err) {
   console.error('error', err);
