@@ -10,6 +10,7 @@ exports.Queue = require('./lib/queue');
 exports.Splitter = require('./lib/splitter');
 exports.Timeout = require('./lib/timeout');
 exports.Walk = require('./lib/walk');
+exports.VM = require('./lib/vm');
 
 exports.readToEnd = function(stream, callback) {
   /** Read a stream to the end, buffering all chunks into an array.
