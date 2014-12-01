@@ -9,6 +9,7 @@ exports.property = require('./lib/property'); // for property.Filter and propert
 exports.Queue = require('./lib/queue');
 exports.Splitter = require('./lib/splitter');
 exports.Timeout = require('./lib/timeout');
+exports.Transformer = require('./lib/transformer');
 exports.Walk = require('./lib/walk');
 exports.VM = require('./lib/vm');
 
