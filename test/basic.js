@@ -81,7 +81,7 @@ tap.test('Walk', function(t) {
         return node.path.match(/walk.js$/);
       });
 
-      t.equal(paths.length, 14, 'There should be 14 children in lib/');
+      t.equal(paths.length, 15, 'There should be 15 children in lib/');
       t.ok(walk_js_present, 'One of the paths should end with "walk.js".');
       t.end();
     });

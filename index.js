@@ -1,6 +1,7 @@
 /*jslint node: true */
 
 exports.Batcher = require('./lib/batcher');
+exports.EventSource = require('./lib/eventsource');
 exports.Filter = require('./lib/filter');
 exports.Glob = require('./lib/glob');
 exports.json = require('./lib/json'); // for json.Parser and json.Stringifier
