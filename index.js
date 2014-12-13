@@ -8,6 +8,7 @@ exports.json = require('./lib/json'); // for json.Parser and json.Stringifier
 exports.Mapper = require('./lib/mapper');
 exports.property = require('./lib/property'); // for property.Filter and property.Omitter
 exports.Queue = require('./lib/queue');
+exports.Sink = require('./lib/sink');
 exports.Splitter = require('./lib/splitter');
 exports.Timeout = require('./lib/timeout');
 exports.Transformer = require('./lib/transformer');
