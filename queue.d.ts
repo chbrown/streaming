@@ -28,9 +28,9 @@ Example:
 */
 export declare class Queue extends Duplex {
     protected concurrency: number;
-    protected transformFn: TransformCall<any>;
+    protected transformFn: (chunk: any, encoding: string, callback: (error?: Error, outputChunk?: any) => void) => void;
     protected _in_progress: number;
-    constructor(concurrency: number, transformFn: TransformCall<any>, options?: DuplexOptions);
+    constructor(concurrency: number, transformFn: (chunk: any, encoding: string, callback: (error?: Error, outputChunk?: any) => void) => void, options?: DuplexOptions);
     /** _read is called when the user wants data from this stream.
   
     From the [stream docs](http://nodejs.org/api/stream.html#stream_readable_read_size_1):

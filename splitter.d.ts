@@ -35,6 +35,6 @@ export declare class Splitter extends Transform {
     objectMode is true, it'll be an arbirary object, and `encoding` will just be
     'buffer'.
     */
-    _transform(chunk: any, encoding: string, callback: TransformCallback): void;
+    _transform(chunk: any, encoding: string, callback: (error?: Error, outputChunk?: any) => void): void;
     _flush(callback: any): void;
 }

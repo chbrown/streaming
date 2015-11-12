@@ -21,7 +21,7 @@ export declare class VM<T> extends Transform {
     each chunk should be a discrete object
     encoding should be null
     */
-    _transform(chunk: any, encoding: string, callback: TransformCallback): void;
+    _transform(chunk: any, encoding: string, callback: (error?: Error, outputChunk?: any) => void): void;
     /** Run a bit of code once using the streaming.VM's global context.
   
         code: string

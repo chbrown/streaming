@@ -14,7 +14,7 @@ export declare class ArrayStringifier extends Transform {
     protected space: string | number;
     protected _seen_first_item: boolean;
     constructor(replacer?: any, space?: string | number);
-    _transform(chunk: any, encoding: string, callback: TransformCallback): void;
+    _transform(chunk: any, encoding: string, callback: (error?: Error, outputChunk?: any) => void): void;
     _flush(callback: any): void;
 }
 /** streaming.json.Stringifer expects objects and outputs strings / buffers
@@ -33,7 +33,7 @@ export declare class Stringifier extends Transform {
     protected replacer: any;
     protected space: string | number;
     constructor(replacer?: any, space?: string | number);
-    _transform(chunk: any, encoding: string, callback: TransformCallback): void;
+    _transform(chunk: any, encoding: string, callback: (error?: Error, outputChunk?: any) => void): void;
 }
 /** streaming.json.Parser expects Buffer input with universal newlines
 dividing JSON objects.
@@ -45,6 +45,6 @@ export declare class Parser extends Transform {
     constructor(replacer?: any, space?: string | number);
     _line(buffer: any): void;
     _process_buffer(eof: any): void;
-    _transform(chunk: any, encoding: string, callback: TransformCallback): void;
-    _flush(callback: FlushCallback): void;
+    _transform(chunk: any, encoding: string, callback: (error?: Error, outputChunk?: any) => void): void;
+    _flush(callback: (error?: Error) => void): void;
 }

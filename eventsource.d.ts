@@ -18,5 +18,5 @@ MDN is usually great, but their article on EventSource sucks:
 */
 export declare class EventSource extends Transform {
     constructor(options?: TransformOptions);
-    _transform(chunk: any, encoding: string, callback: TransformCallback): void;
+    _transform(chunk: any, encoding: string, callback: (error?: Error, outputChunk?: any) => void): void;
 }

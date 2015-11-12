@@ -11,6 +11,6 @@ export declare class Batcher<T> extends Transform {
     checkFlush is called by both _transform and _flush, with different `end` values.
     */
     protected checkFlush(end: boolean, callback: (error?: Error) => void): void;
-    _transform(chunk: T, encoding: string, callback: TransformCallback): void;
-    _flush(callback: FlushCallback): void;
+    _transform(chunk: T, encoding: string, callback: (error?: Error, outputChunk?: T[]) => void): void;
+    _flush(callback: (error?: Error) => void): void;
 }

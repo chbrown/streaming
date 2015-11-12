@@ -10,6 +10,6 @@ export declare class Timeout extends Transform {
     timeoutMilliseconds: number;
     constructor(timeoutSeconds: number, options?: TransformOptions);
     _check(): void;
-    _transform(chunk: any, encoding: string, callback: TransformCallback): void;
+    _transform(chunk: any, encoding: string, callback: (error?: Error, outputChunk?: any) => void): void;
     _flush(callback: any): void;
 }

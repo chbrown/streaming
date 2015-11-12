@@ -3,7 +3,7 @@ import { Transform, TransformOptions } from 'stream';
 given callback, which means the processing code can be async.
 
 `this` is bound to the stream object inside the transform function, so you
-can use `this.push(...)` to output multiple data per input datum.
+can use `this.push(...)` to output multiple chunks per single input chunk.
 
 Example:
 
@@ -17,6 +17,6 @@ Example:
     }, {objectMode: true});
 
 */
-export declare class Transformer<T> extends Transform {
-    constructor(transformFn: TransformCall<T>, options?: TransformOptions);
+export declare class Transformer<T, R> extends Transform {
+    constructor(transformFn: (chunk: T, encoding: string, callback: (error?: Error, outputChunk?: R) => void) => void, options?: TransformOptions);
 }
