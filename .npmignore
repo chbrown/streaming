@@ -1,3 +1,4 @@
+tests/
 Makefile
 shims.d.ts
 batcher.ts
