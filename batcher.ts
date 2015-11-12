@@ -20,11 +20,13 @@ export class Batcher<T> extends Transform {
     }
     callback();
   }
-  _transform(chunk: T, encoding: string, callback: TransformCallback) {
+  _transform(chunk: T,
+             encoding: string,
+             callback: (error?: Error, outputChunk?: T[]) => void) {
     this.batchBuffer.push(chunk);
     this.checkFlush(false, callback);
   }
-  _flush(callback: FlushCallback) {
+  _flush(callback: (error?: Error) => void) {
     this.checkFlush(true, callback);
   }
 }

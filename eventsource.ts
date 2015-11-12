@@ -21,7 +21,9 @@ export class EventSource extends Transform {
   constructor(options?: TransformOptions) {
     super(options);
   }
-  _transform(chunk: any, encoding: string, callback: TransformCallback) {
+  _transform(chunk: any,
+             encoding: string,
+             callback: (error?: Error, outputChunk?: any) => void) {
     // encoding may be something weird like "buffer" if chunk is just a string
     callback(null, `data: ${chunk.toString()}\n\n`);
   }

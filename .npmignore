@@ -1,6 +1,5 @@
 tests/
 Makefile
-shims.d.ts
 batcher.ts
 eventsource.ts
 filter.ts
@@ -9,7 +8,6 @@ json.ts
 mapper.ts
 property.ts
 queue.ts
-shims.d.ts
 sink.ts
 splitter.ts
 timeout.ts

@@ -34,7 +34,9 @@ export class ArrayStringifier extends Transform {
     this['_writableState'].objectMode = true;
     this.push('[');
   }
-  _transform(chunk: any, encoding: string, callback: TransformCallback) {
+  _transform(chunk: any,
+             encoding: string,
+             callback: (error?: Error, outputChunk?: any) => void) {
     if (this._seen_first_item) {
       this.push(',' + JSON.stringify(chunk, this.replacer, this.space));
     }
@@ -67,7 +69,9 @@ export class Stringifier extends Transform {
     super();
     this['_writableState'].objectMode = true;
   }
-  _transform(chunk: any, encoding: string, callback: TransformCallback) {
+  _transform(chunk: any,
+             encoding: string,
+             callback: (error?: Error, outputChunk?: any) => void) {
     this.push(JSON.stringify(chunk, this.replacer, this.space) + EOL); // , 'utf8'
     callback();
   }
@@ -121,12 +125,14 @@ export class Parser extends Transform {
 
     this._buffer = this._buffer.slice(offset);
   }
-  _transform(chunk: any, encoding: string, callback: TransformCallback) {
+  _transform(chunk: any,
+             encoding: string,
+             callback: (error?: Error, outputChunk?: any) => void) {
     this._buffer = Buffer.concat([this._buffer, chunk]);
     this._process_buffer(false);
     callback();
   }
-  _flush(callback: FlushCallback) {
+  _flush(callback: (error?: Error) => void) {
     this._process_buffer(true);
     callback();
   }

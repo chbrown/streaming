@@ -29,7 +29,9 @@ export class VM<T> extends Transform {
   each chunk should be a discrete object
   encoding should be null
   */
-  _transform(chunk: any, encoding: string, callback: TransformCallback) {
+  _transform(chunk: any,
+             encoding: string,
+             callback: (error?: Error, outputChunk?: any) => void) {
     this.context.$out = undefined;
     this.context.$in = chunk;
 

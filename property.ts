@@ -5,7 +5,9 @@ export class Picker extends Transform {
     // objects in, objects out
     super({objectMode: true});
   }
-  _transform(chunk: any, encoding: string, callback: TransformCallback) {
+  _transform(chunk: any,
+             encoding: string,
+             callback: (error?: Error, outputChunk?: any) => void) {
     var filtered = {};
     for (var i = 0; i < this.fields.length; i++) {
       filtered[this.fields[i]] = chunk[this.fields[i]];
@@ -24,7 +26,9 @@ export class Omitter extends Transform {
       this.fieldsMap[fields[i]] = 1;
     }
   }
-  _transform(chunk: any, encoding: string, callback: TransformCallback) {
+  _transform(chunk: any,
+             encoding: string,
+             callback: (error?: Error, outputChunk?: any) => void) {
     for (var field in this.fieldsMap) {
       delete chunk[field];
     }

@@ -8,7 +8,7 @@ var stream_1 = require('stream');
 given callback, which means the processing code can be async.
 
 `this` is bound to the stream object inside the transform function, so you
-can use `this.push(...)` to output multiple data per input datum.
+can use `this.push(...)` to output multiple chunks per single input chunk.
 
 Example:
 

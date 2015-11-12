@@ -30,7 +30,9 @@ Example:
 export class Queue extends Duplex {
   protected _in_progress: number = 0;
   constructor(protected concurrency: number,
-              protected transformFn: TransformCall<any>,
+              protected transformFn: (chunk: any,
+                                      encoding: string,
+                                      callback: (error?: Error, outputChunk?: any) => void) => void,
               options?: DuplexOptions) {
     super(options);
   }

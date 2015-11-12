@@ -24,7 +24,9 @@ export class Timeout extends Transform {
       this.emit('error', new Error(`Timed out: ${millisecondsSinceLast}ms`));
     }
   }
-  _transform(chunk: any, encoding: string, callback: TransformCallback) {
+  _transform(chunk: any,
+             encoding: string,
+             callback: (error?: Error, outputChunk?: any) => void) {
     this.lastChunkReceived = (new Date()).getTime();
     this.push(chunk);
     callback();

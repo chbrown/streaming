@@ -84,7 +84,9 @@ export class Splitter extends Transform {
   objectMode is true, it'll be an arbirary object, and `encoding` will just be
   'buffer'.
   */
-  _transform(chunk: any, encoding: string, callback: TransformCallback) {
+  _transform(chunk: any,
+             encoding: string,
+             callback: (error?: Error, outputChunk?: any) => void) {
     // assert encoding == 'buffer'
     var buffer = Buffer.concat([this._buffer, chunk]);
     this._buffer = this._advance(buffer);
