@@ -4,15 +4,6 @@ A few stream helpers, built for Node.js 0.10+ streams ("Streams2").
 
     npm install streaming
 
-* [Glob](#glob)
-
-
-### `streaming.Glob`
-
-`new Glob(pattern, options)` inherits `stream.Readable`
-
-* _readableState.objectMode: true
-
 
 ### `streaming.Filter`
 
@@ -122,16 +113,15 @@ walk.on('data', function(node) {
 <!-- the space after each period is to allow a line break -->
 | opts. decodeStrings | opts. objectMode | _writableState. decodeStrings | _writableState. objectMode | _readableState. objectMode |
 |:----|:----|:----|:----|:----|
-| true | true | true | true | true |
-| false | true | false | true | true |
-| undefined | true | true | true | true |
-| true | false | true | false | false |
+| **true** | **true** | **true** | **true** | **true** |
+| false | **true** | false | **true** | **true** |
+| undefined | **true** | **true** | **true** | **true** |
+| **true** | false | **true** | false | false |
 | false | false | false | false | false |
-| undefined | false | true | false | false |
-| true | undefined | true | false | false |
+| undefined | false | **true** | false | false |
+| **true** | undefined | **true** | false | false |
 | false | undefined | false | false | false |
-| undefined | undefined | true | false | false |
-
+| undefined | undefined | **true** | false | false |
 
 (Only `_writableState` has a `decodeStrings` field.)
 
@@ -151,6 +141,7 @@ function log_row(values) { console.log('| ' + values.join(' | ') + ' |'); };
 })();
 -->
 
+
 ## License
 
-Copyright 2013-2014 Christopher Brown. [MIT Licensed](http://opensource.org/licenses/MIT).
+Copyright 2013-2015 Christopher Brown. [MIT Licensed](http://chbrown.github.io/licenses/MIT/#2013-2015).

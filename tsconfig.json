@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES5"
+  },
+  "files": [
+    "node_modules/declarations/node/node.d.ts",
+    "shims.d.ts",
+    "batcher.ts",
+    "eventsource.ts",
+    "filter.ts",
+    "index.ts",
+    "json.ts",
+    "mapper.ts",
+    "property.ts",
+    "queue.ts",
+    "shims.d.ts",
+    "sink.ts",
+    "splitter.ts",
+    "timeout.ts",
+    "transformer.ts",
+    "vm.ts"
+  ]
+}

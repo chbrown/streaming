@@ -12,6 +12,7 @@
 // exports.Transformer = require('./transformer');
 // exports.Walk = require('./walk');
 // exports.VM = require('./vm');
+
 /** Read a stream to the end, storing all chunks in an array.
 
 For example, to read all STDIN:
@@ -23,11 +24,11 @@ For example, to read all STDIN:
     });
 
 */
-function readToEnd(stream, callback) {
-    var chunks = [];
-    return stream
-        .on('error', callback)
-        .on('data', function (chunk) { return chunks.push(chunk); })
-        .on('end', function () { return callback(null, chunks); });
+export function readToEnd(stream: NodeJS.ReadableStream,
+                          callback: (error: Error, chunks?: any[]) => void) {
+  var chunks = [];
+  return stream
+  .on('error', callback)
+  .on('data', chunk => chunks.push(chunk))
+  .on('end', () => callback(null, chunks));
 }
-exports.readToEnd = readToEnd;
