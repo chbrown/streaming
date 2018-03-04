@@ -1,18 +1,3 @@
-// import {Readable} from 'stream';
-// exports.Batcher = require('./batcher');
-// exports.EventSource = require('./eventsource');
-// exports.Filter = require('./filter');
-// exports.json = require('./json'); // for json.Parser and json.Stringifier
-// exports.Mapper = require('./mapper');
-// exports.property = require('./property'); // for property.Filter and property.Omitter
-// exports.Queue = require('./queue');
-// exports.Sink = require('./sink');
-// exports.Splitter = require('./splitter');
-// exports.Timeout = require('./timeout');
-// exports.Transformer = require('./transformer');
-// exports.Walk = require('./walk');
-// exports.VM = require('./vm');
-
 /** Read a stream to the end, storing all chunks in an array.
 
 For example, to read all STDIN:
