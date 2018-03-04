@@ -1,4 +1,4 @@
-import {createScript, Script, runInNewContext, Context} from 'vm';
+import {Script, runInNewContext, Context} from 'vm';
 import {Transform} from 'stream';
 
 const __null = {
@@ -7,24 +7,28 @@ const __null = {
 };
 
 /**
-    code: string
-      Two important facts about this code:
-      1. It should process a global variable, `$in`, which represents the
-         current object in the stream.
-      2. It should set the global variable `$out`, which represents the
-         object that will be returned and sent downstream.
-    context?: any = {}
-      Results and side effects are tracked in this global context object.
-    filename?: string = 'streaming.vm'
-      Used in stack traces.
+code: string
+  Two important facts about this code:
+  1. It should process a global variable, `$in`, which represents the
+     current object in the stream.
+  2. It should set the global variable `$out`, which represents the
+     object that will be returned and sent downstream.
+context?: any = {}
+  Results and side effects are tracked in this global context object.
+filename?: string = 'streaming.vm'
+  Used in stack traces.
 */
 export class VM<T> extends Transform {
   protected script: Script;
-  constructor(code: string, public context: any = {}, public filename: string = 'streaming.vm') {
+
+  constructor(code: string,
+              public context: any = {},
+              public filename: string = 'streaming.vm') {
     super({objectMode: true});
     // should the createScript call be inside a try-catch?
-    this.script = createScript(code, filename);
+    this.script = new Script(code, {filename});
   }
+
   /**
   each chunk should be a discrete object
   encoding should be null
@@ -57,11 +61,12 @@ export class VM<T> extends Transform {
     }
     callback();
   }
-  /** Run a bit of code once using the streaming.VM's global context.
 
-      code: string
+  /**
+  Run a bit of code once using the streaming.VM's global context.
   */
   run(code: string) {
-    return runInNewContext(code, this.context, this.filename);
+    const filename = this.filename;
+    return runInNewContext(code, this.context, {filename});
   }
 }
