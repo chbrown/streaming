@@ -7,9 +7,9 @@ import {EventSource} from '../eventsource';
 describe('EventSource', () => {
   it('should wrap each input chunk with "data:" and separate each chunk with two newlines', done => {
     var eventSource = new EventSource();
-    eventSource.write("initializing app");
-    eventSource.write("performing work");
-    eventSource.write("cleaning up");
+    eventSource.write('initializing app');
+    eventSource.write('performing work');
+    eventSource.write('cleaning up');
     eventSource.end();
 
     readToEnd(eventSource, (err, chunks) => {

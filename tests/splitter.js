@@ -6,7 +6,6 @@ import {Splitter} from '../splitter';
 
 describe('Splitter', () => {
   it('should split chunks covering multiple lines into a chunks of one line each', done => {
-
     var splitter = new Splitter();
     splitter.setEncoding('utf8');
 

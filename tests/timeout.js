@@ -5,7 +5,7 @@ import {Timeout} from '../timeout';
 
 describe('Timeout', () => {
   it('should collect chunks emitted before timeout', done => {
-    var timeout = new Timeout(.1, {objectMode: true});
+    var timeout = new Timeout(0.1, {objectMode: true});
     timeout.write({letter: 'A'});
     timeout.write({letter: 'B'});
     setTimeout(() => {
