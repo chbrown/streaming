@@ -12,10 +12,7 @@
     "writable"
   ],
   "homepage": "https://github.com/chbrown/streaming",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/chbrown/streaming.git"
-  },
+  "repository": "git://github.com/chbrown/streaming.git",
   "author": "Christopher Brown <io@henrian.com>",
   "license": "MIT",
   "devDependencies": {
