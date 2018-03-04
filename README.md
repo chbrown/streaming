@@ -2,6 +2,7 @@
 
 [![latest version published to npm](https://badge.fury.io/js/streaming.svg)](https://www.npmjs.com/package/streaming)
 [![Travis CI build status](https://travis-ci.org/chbrown/streaming.svg?branch=master)](https://travis-ci.org/chbrown/streaming)
+[![Coverage status on Coveralls](https://coveralls.io/repos/github/chbrown/streaming/badge.svg?branch=master)](https://coveralls.io/github/chbrown/streaming?branch=master)
 
 A few stream helpers, built for Node.js 0.10+ streams ("Streams2").
 
