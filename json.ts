@@ -78,7 +78,7 @@ export class Stringifier extends Transform {
 }
 
 /** streaming.json.Parser expects Buffer input with universal newlines
-dividing JSON objects.
+dividing JSON objects. You shouldn't put a Splitter() in front of it.
 */
 export class Parser extends Transform {
   protected _buffer: Buffer = new Buffer(0);
@@ -125,6 +125,10 @@ export class Parser extends Transform {
 
     this._buffer = this._buffer.slice(offset);
   }
+  /**
+  chunk will be a Buffer, and either one is fine by JSON.parse, but to
+  appease TypeScript, type assert that it's <any>
+  */
   _transform(chunk: any,
              encoding: string,
              callback: (error?: Error, outputChunk?: any) => void) {
