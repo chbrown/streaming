@@ -1,5 +1,7 @@
 # streaming
 
+[![latest version published to npm](https://badge.fury.io/js/streaming.svg)](https://www.npmjs.com/package/streaming)
+
 A few stream helpers, built for Node.js 0.10+ streams ("Streams2").
 
     npm install streaming
@@ -9,16 +11,16 @@ A few stream helpers, built for Node.js 0.10+ streams ("Streams2").
 
 `new Filter(predicate)` inherits `stream.Readable`
 
-* _readableState.objectMode: true
+* `_readableState.objectMode: true`
 
 
 ### `streaming.json.Stringifier`
 
 `new Stringifier(replacer, space)` inherits `streaming.Splitter`
 
-* objectMode: false
-  * _writableState.objectMode: false
-  * _readableState.objectMode: true
+* `objectMode: false`
+  * `_writableState.objectMode: false`
+  * `_readableState.objectMode: true`
 
 
 ### `streaming.json.Parser`
@@ -32,16 +34,16 @@ A few stream helpers, built for Node.js 0.10+ streams ("Streams2").
 
 `new Mapper(fn)` inherits `stream.Transform`
 
-* _writableState.objectMode: true
-* _readableState.objectMode: true
+* `_writableState.objectMode: true`
+* `_readableState.objectMode: true`
 
 
 ### `streaming.Queue`
 
 `new Queue(concurrency, worker)` inherits `streaming.Mapper`
 
-* _writableState.objectMode: true
-* _readableState.objectMode: true
+* `_writableState.objectMode: true`
+* `_readableState.objectMode: true`
 
 Example:
 
@@ -110,8 +112,8 @@ walk.on('data', function(node) {
 
 ## `stream.Transform(opts)` results:
 
-<!-- the space after each period is to allow a line break -->
-| opts. decodeStrings | opts. objectMode | _writableState. decodeStrings | _writableState. objectMode | _readableState. objectMode |
+<!-- the space after each period is to allow line breaks -->
+| `opts.` `decodeStrings` | `opts.` `objectMode` | `_writableState.` `decodeStrings` | `_writableState.` `objectMode` | `_readableState.` `objectMode` |
 |:----|:----|:----|:----|:----|
 | **true** | **true** | **true** | **true** | **true** |
 | false | **true** | false | **true** | **true** |
@@ -144,4 +146,5 @@ function log_row(values) { console.log('| ' + values.join(' | ') + ' |'); };
 
 ## License
 
-Copyright 2013-2015 Christopher Brown. [MIT Licensed](http://chbrown.github.io/licenses/MIT/#2013-2015).
+Copyright 2013-2015 Christopher Brown.
+[MIT Licensed](https://chbrown.github.io/licenses/MIT/#2013-2015).
