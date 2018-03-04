@@ -6,7 +6,7 @@ function byteAdvancer(split_byte) {
     var cursor = 0;
     for (var i = 0, l = buffer.length; i < l; i++) {
       if (buffer[i] === split_byte) {
-        this._chunk(buffer.slice(cursor, i));
+        this.flushBuffer(buffer.slice(cursor, i));
         cursor = i + 1;
       }
     }
@@ -19,6 +19,32 @@ export interface SplitterOptions extends TransformOptions {
 }
 
 /**
+Splitter is a stream.Transform that rechunks a stream into sub-buffers.
+The output (readable) part is set to objectMode true, and emits Buffer objects.
+The input (writable) part should be plain buffers (have no encoding).
+
+By default, it splits on the universal newline (\r, \r\n, or \n).
+The split byte can be specified in the options.
+
+_writableState.decodeStrings defaults to true, so we should get Buffers
+regardless of what's pushed in. If `opts.decodeStrings` is set to `false`,
+the behavior is undefined. (TODO: force decodeStrings: true maybe?)
+
+In other words, the Splitter should have the following values:
+
+    {
+      _writableState: {
+        decodeStrings: true,
+        objectMode: false
+      },
+      _readableState: {
+        objectMode: true
+      }
+    }
+
+*/
+
+/**
 A splitter stream rechunks a stream at every `split` byte, if `split` is defined.
 If `split` is not defined, it will split at the universal newline (\r, \r\n, or \n).
 
@@ -28,10 +54,10 @@ _readableState.objectMode = true
 
 Node.js 'stream' API calls _transform and _flush:
   _transform calls _advance:
-    _advance calls _chunk (maybe multiple times)
-      _chunk calls push()
-  _flush calls _chunk, either once or not at all
-    _chunk calls push()
+    _advance calls flushBuffer (maybe multiple times)
+      flushBuffer calls push()
+  _flush calls flushBuffer, either once or not at all
+    flushBuffer calls push()
 
 */
 export class Splitter extends Transform {
@@ -54,8 +80,8 @@ export class Splitter extends Transform {
     this._encoding = encoding;
     return this;
   }
-  /** _chunk handles what we do to each split part */
-  _chunk(buffer) {
+  /** flushBuffer handles what we do to each split part */
+  protected flushBuffer(buffer) {
     // assert Buffer.isBuffer(buffer)
     if (this._encoding !== null) {
       this.push(buffer.toString(this._encoding));
@@ -68,8 +94,9 @@ export class Splitter extends Transform {
   _advance(buffer) {
     var cursor = 0;
     for (var i = 0, l = buffer.length; i < l; i++) {
+      // smart handling of \r and \n
       if (buffer[i] === 13 || buffer[i] === 10) {
-        this._chunk(buffer.slice(cursor, i));
+        this.flushBuffer(buffer.slice(cursor, i));
         if (buffer[i] === 13 && buffer[i + 1] === 10) { // '\r\n'
           i++;
         }
@@ -79,7 +106,7 @@ export class Splitter extends Transform {
     return buffer.slice(cursor);
   }
   /**
-  `encoding` describes the type of `chunk` -- if the decodeStrings option is
+  `encoding` describes the type of `chunk` -- if the _writableState.decodeStrings option is
   true, this will be useful; otherwise, `chunk` will be just a buffer, or if
   objectMode is true, it'll be an arbirary object, and `encoding` will just be
   'buffer'.
@@ -94,8 +121,8 @@ export class Splitter extends Transform {
   }
   _flush(callback) {
     this._advance(this._buffer);
-    if (this._buffer && this._buffer.length) {
-      this._chunk(this._buffer);
+    if (this._buffer && this._buffer.length > 0) {
+      this.flushBuffer(this._buffer);
     }
     callback();
   }
