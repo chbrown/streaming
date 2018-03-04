@@ -1,6 +1,7 @@
 # streaming
 
 [![latest version published to npm](https://badge.fury.io/js/streaming.svg)](https://www.npmjs.com/package/streaming)
+[![Travis CI build status](https://travis-ci.org/chbrown/streaming.svg?branch=master)](https://travis-ci.org/chbrown/streaming)
 
 A few stream helpers, built for Node.js 0.10+ streams ("Streams2").
 
