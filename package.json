@@ -16,12 +16,14 @@
   "author": "Christopher Brown <io@henrian.com>",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^5.0.0",
-    "declarations": "*",
-    "mocha": "*",
-    "typescript": "next"
+    "@types/mocha": "^2.2.43",
+    "@types/node": "latest",
+    "mocha": "^3.5.3",
+    "typescript": "^2.7.2"
   },
   "scripts": {
-    "test": "make test"
+    "prepare": "tsc -d",
+    "test": "mocha tests/",
+    "clean": "tsc -d --listEmittedFiles | grep '^TSFILE: ' | sed 's/^TSFILE: //' | xargs rm -v"
   }
 }
