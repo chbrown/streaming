@@ -4,6 +4,18 @@
     "target": "ES5"
   },
   "files": [
+    "tests/batcher.ts",
+    "tests/eventsource.ts",
+    "tests/filter.ts",
+    "tests/json.ts",
+    "tests/mapper.ts",
+    "tests/property.ts",
+    "tests/queue.ts",
+    "tests/sink.ts",
+    "tests/splitter.ts",
+    "tests/timeout.ts",
+    "tests/transformer.ts",
+    "tests/vm.ts",
     "batcher.ts",
     "eventsource.ts",
     "filter.ts",

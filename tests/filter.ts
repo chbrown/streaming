@@ -1,12 +1,12 @@
-import assert from 'assert'
-import {describe, it} from 'mocha'
+import * as assert from 'assert'
+import 'mocha'
 
-import {readToEnd} from '../'
+import {readToEnd} from '..'
 import {Filter} from '../filter'
 
 describe('Filter', () => {
   it('should filter out people younger than 21', done => {
-    var filter = new Filter(person => person.age >= 21)
+    var filter = new Filter((person: any) => person.age >= 21)
     filter.write({name: 'R. J. Pratt', age: 51})
     filter.write({name: 'Lincoln Mills', age: 12})
     filter.write({name: 'Archer Pinkerton', age: 21})

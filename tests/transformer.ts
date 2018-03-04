@@ -1,12 +1,12 @@
-import assert from 'assert'
-import {describe, it} from 'mocha'
+import * as assert from 'assert'
+import 'mocha'
 
-import {readToEnd} from '../'
+import {readToEnd} from '..'
 import {Transformer} from '../transformer'
 
 describe('Transformer', () => {
   it('should compute payments due to all workers', done => {
-    var transformer = new Transformer((chunk, encoding, callback) => {
+    var transformer = new Transformer((chunk: any, encoding, callback) => {
       setTimeout(() => {
         callback(null, (chunk.rate * chunk.hours))
       }, 10)

@@ -1,7 +1,7 @@
-import assert from 'assert'
-import {describe, it} from 'mocha'
+import * as assert from 'assert'
+import 'mocha'
 
-import {readToEnd} from '../'
+import {readToEnd} from '..'
 import {ArrayStringifier, Stringifier, Parser} from '../json'
 
 describe('json.ArrayStringifier', () => {

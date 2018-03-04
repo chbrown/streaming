@@ -1,7 +1,7 @@
-import assert from 'assert'
-import {describe, it} from 'mocha' // unnecessary but placates the ES6 linter
+import * as assert from 'assert'
+import 'mocha' // unnecessary but placates the ES6 linter
 
-import {readToEnd} from '../'
+import {readToEnd} from '..'
 import {Batcher} from '../batcher'
 
 describe('Batcher', () => {

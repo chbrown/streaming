@@ -1,12 +1,12 @@
-import assert from 'assert'
-import {describe, it} from 'mocha'
+import * as assert from 'assert'
+import 'mocha'
 
-import {readToEnd} from '../'
+import {readToEnd} from '..'
 import {Mapper} from '../mapper'
 
 describe('Mapper', () => {
   it('should compute payments due to all workers', done => {
-    var mapper = new Mapper(worker => worker.rate * worker.hours)
+    var mapper = new Mapper((worker: any) => worker.rate * worker.hours)
     mapper.write({rate: 50.0, hours: 10.0})
     mapper.write({rate: 22.5, hours: 5})
     mapper.write({rate: 75, hours: 100})
