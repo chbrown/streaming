@@ -9,10 +9,9 @@ can use `this.push(...)` to output multiple chunks per single input chunk.
 Example:
 
     new streaming.Transformer(function(chunk, encoding, callback) {
-      var self = this;
-      setTimeout(function() {
-        self.push('...');
-        self.push(chunk);
+      setTimeout(() => {
+        this.push('...');
+        this.push(chunk);
         callback();
       }, 1000);
     }, {objectMode: true});

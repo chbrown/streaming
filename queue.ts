@@ -1,9 +1,6 @@
 import {Duplex, DuplexOptions} from 'stream';
 
-/** new streaming.Queue(concurrency: number,
-                        transform: TransformCallback,
-                        options: any)
-
+/**
 Queue is much like streaming.Transfomer(transform, options), but it applies the
 `transform` function to each piece of data, at most `concurrency` at a time.
 
@@ -20,15 +17,16 @@ duration of the transform function) that complicate the mapping.
 
 Example:
 
-    new streaming.Queue(10, function(chunk, encoding, callback) {
-      setTimeout(function() {
+    new streaming.Queue(10, (chunk, encoding, callback) => {
+      setTimeout(() => {
         callback(null, {result: 'chunk length is ' + chunk.length + '.'});
       }, Math.random() * 500);
     }, {objectMode: true});
 
 */
 export class Queue extends Duplex {
-  protected _in_progress: number = 0;
+  protected _inProgress: number = 0;
+
   constructor(protected concurrency: number,
               protected transformFn: (chunk: any,
                                       encoding: string,
@@ -37,7 +35,7 @@ export class Queue extends Duplex {
     super(options);
   }
 
-  /** _read is called when the user wants data from this stream.
+  /** Called when the user wants data from this stream.
 
   From the [stream docs](http://nodejs.org/api/stream.html#stream_readable_read_size_1):
 
@@ -49,24 +47,24 @@ export class Queue extends Duplex {
   We might conceivably use it to determine if are free to stop processing
   incoming tasks; i.e., if no one wants them, we don't need to read them.
   */
-  _read(size) {
+  _read(size: number) {
     // console.error('Queue._read called: %j', size);
   }
-  _write(chunk, encoding, callback) {
-    // console.error('Queue._write called: %d', this._in_progress);
-    this._in_progress++;
 
-    var finalized = false;
+  _write(chunk: any, encoding: string, callback: (error?: Error) => void) {
+    // console.error('Queue._write called: %d', this._inProgress);
+    this._inProgress++;
 
-    var self = this;
+    let finalized = false;
+
     this.transformFn(chunk, encoding, (err, outputChunk) => {
-      self._in_progress--;
+      this._inProgress--;
 
       if (err) {
-        self.emit('error', err);
+        this.emit('error', err);
       }
       else {
-        self.push(outputChunk);
+        this.push(outputChunk);
       }
 
       if (!finalized) {
@@ -74,13 +72,13 @@ export class Queue extends Duplex {
         finalized = true; // necessary?
       }
 
-      // if (this._in_progress === 0 && this._writableState.ended === true) {
+      // if (this._inProgress === 0 && this._writableState.ended === true) {
       //   this.push(null);
       // }
     });
 
     // if we have not yet hit the concurrency limit, we say that we have handled it immediately
-    if (this._in_progress < this.concurrency) {
+    if (this._inProgress < this.concurrency) {
       // check for finalized here, in case this.transform is not truly async
       if (!finalized) {
         callback();

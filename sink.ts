@@ -10,6 +10,7 @@ export class Sink extends Transform {
   constructor(options?: TransformOptions) {
     super(options);
   }
+
   _transform(chunk: any,
              encoding: string,
              callback: (error?: Error, outputChunk?: any) => void) {

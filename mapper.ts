@@ -1,8 +1,12 @@
 import {Transform} from 'stream';
 
 const __null = {
-  toJSON: () => null,
-  valueOf: () => null,
+  toJSON(): null {
+    return null;
+  },
+  valueOf(): null {
+    return null;
+  },
 };
 
 /**
@@ -16,8 +20,9 @@ export class Mapper<T, R> extends Transform {
     super({objectMode: true});
     this.transformFn = transformFn.bind(this);
   }
+
   _transform(chunk: T, encoding: string, callback: (error?: Error, outputChunk?: R) => void) {
-    var result = this.transformFn(chunk);
+    const result = this.transformFn(chunk);
     if (result === null) {
       // We have to wrap pure JS nulls, because `push(null)` means EOF to streams.
       // It's kind of a hack, but it works nicely when we JSON.stringify downstream.

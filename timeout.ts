@@ -17,21 +17,24 @@ export class Timeout extends Transform {
     this.timeoutMilliseconds = timeoutSeconds * 1000;
     setInterval(() => this._check(), this.timeoutMilliseconds);
   }
-  _check() {
+
+  _check(): void {
     // millisecondsSinceLast: milliseconds since we last saw some incoming data
-    var millisecondsSinceLast = (new Date()).getTime() - this.lastChunkReceived;
+    const millisecondsSinceLast = (new Date()).getTime() - this.lastChunkReceived;
     if (millisecondsSinceLast > this.timeoutMilliseconds) {
       this.emit('error', new Error(`Timed out: ${millisecondsSinceLast}ms`));
     }
   }
+
   _transform(chunk: any,
              encoding: string,
-             callback: (error?: Error, outputChunk?: any) => void) {
+             callback: (error?: Error, outputChunk?: any) => void): void {
     this.lastChunkReceived = (new Date()).getTime();
     this.push(chunk);
     callback();
   }
-  _flush(callback) {
+
+  _flush(callback: (error?: Error) => void): void {
     // don't clear the interval
     callback();
   }

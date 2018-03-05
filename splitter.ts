@@ -1,11 +1,11 @@
 import {Transform, TransformOptions} from 'stream';
 
-function byteAdvancer(split_byte) {
+function byteAdvancer(splitByte: number): (buffer: Buffer) => Buffer {
   // just a closure around a generic byte read-loop
-  return function(buffer) {
-    var cursor = 0;
-    for (var i = 0, l = buffer.length; i < l; i++) {
-      if (buffer[i] === split_byte) {
+  return function(buffer: Buffer) {
+    let cursor = 0;
+    for (let i = 0, l = buffer.length; i < l; i++) {
+      if (buffer[i] === splitByte) {
         this.flushBuffer(buffer.slice(cursor, i));
         cursor = i + 1;
       }
@@ -62,7 +62,8 @@ Node.js 'stream' API calls _transform and _flush:
 */
 export class Splitter extends Transform {
   protected _buffer = new Buffer(0);
-  protected _encoding = null;
+  protected _encoding: string = null;
+
   constructor(options?: SplitterOptions) {
     super(options);
     // we set the readable side to objectMode, in any case, so that the
@@ -72,17 +73,17 @@ export class Splitter extends Transform {
       // if we are given a split string, use the byte code of the first character to split
       this._advance = byteAdvancer(options.split.charCodeAt(0));
     }
-
   }
+
   /** calling this will call toString on all emitted chunks, instead of
   returning buffers. */
-  setEncoding(encoding) {
+  setEncoding(encoding: string): this {
     this._encoding = encoding;
     return this;
   }
-  /** flushBuffer handles what we do to each split part */
-  protected flushBuffer(buffer) {
-    // assert Buffer.isBuffer(buffer)
+
+  /** Handle each split part */
+  protected flushBuffer(buffer: Buffer): void {
     if (this._encoding !== null) {
       this.push(buffer.toString(this._encoding));
     }
@@ -90,10 +91,11 @@ export class Splitter extends Transform {
       this.push(buffer);
     }
   }
-  /** _advance handles how we decide where the split points are */
-  _advance(buffer) {
-    var cursor = 0;
-    for (var i = 0, l = buffer.length; i < l; i++) {
+
+  /** Decide where the split points are */
+  _advance(buffer: Buffer): Buffer {
+    let cursor = 0;
+    for (let i = 0, l = buffer.length; i < l; i++) {
       // smart handling of \r and \n
       if (buffer[i] === 13 || buffer[i] === 10) {
         this.flushBuffer(buffer.slice(cursor, i));
@@ -105,21 +107,23 @@ export class Splitter extends Transform {
     }
     return buffer.slice(cursor);
   }
+
   /**
   `encoding` describes the type of `chunk` -- if the _writableState.decodeStrings option is
   true, this will be useful; otherwise, `chunk` will be just a buffer, or if
-  objectMode is true, it'll be an arbirary object, and `encoding` will just be
+  objectMode is true, it'll be an arbitrary object, and `encoding` will just be
   'buffer'.
   */
-  _transform(chunk: any,
+  _transform(chunk: Buffer,
              encoding: string,
-             callback: (error?: Error, outputChunk?: any) => void) {
+             callback: (error?: Error, outputChunk?: any) => void): void {
     // assert encoding == 'buffer'
-    var buffer = Buffer.concat([this._buffer, chunk]);
+    const buffer = Buffer.concat([this._buffer, chunk]);
     this._buffer = this._advance(buffer);
     callback();
   }
-  _flush(callback) {
+
+  _flush(callback: (error?: Error) => void): void {
     this._advance(this._buffer);
     if (this._buffer && this._buffer.length > 0) {
       this.flushBuffer(this._buffer);

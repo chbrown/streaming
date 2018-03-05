@@ -2,9 +2,18 @@ import {Script, runInNewContext, Context} from 'vm';
 import {Transform} from 'stream';
 
 const __null = {
-  toJSON: () => null,
-  valueOf: () => null,
+  toJSON(): null {
+    return null;
+  },
+  valueOf(): null {
+    return null;
+  },
 };
+
+export interface VMContext {
+  $in?: any;
+  $out?: any;
+}
 
 /**
 code: string
@@ -18,14 +27,14 @@ context?: any = {}
 filename?: string = 'streaming.vm'
   Used in stack traces.
 */
-export class VM<T> extends Transform {
+export class VM<S, T> extends Transform {
   protected script: Script;
 
   constructor(code: string,
-              public context: any = {},
+              public context: VMContext = {},
               public filename: string = 'streaming.vm') {
     super({objectMode: true});
-    // should the createScript call be inside a try-catch?
+    // should new Script(...) be called inside a try-catch?
     this.script = new Script(code, {filename});
   }
 
@@ -33,11 +42,11 @@ export class VM<T> extends Transform {
   each chunk should be a discrete object
   encoding should be null
   */
-  _transform(chunk: any,
+  _transform(chunk: S,
              encoding: string,
-             callback: (error?: Error, outputChunk?: any) => void) {
-    this.context.$out = undefined;
+             callback: (error?: Error, outputChunk?: T) => void) {
     this.context.$in = chunk;
+    this.context.$out = undefined;
 
     try {
       // I'm not sure why this is not called script.runInContext()
@@ -47,7 +56,7 @@ export class VM<T> extends Transform {
       this.emit('error', error);
     }
 
-    var result = this.context.$out;
+    const result = this.context.$out;
     if (result === undefined) {
       // skip it; undefined denotes no output
     }
