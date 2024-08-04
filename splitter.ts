@@ -6,11 +6,11 @@ function byteAdvancer(splitByte: number): (buffer: Buffer) => Buffer {
     let cursor = 0;
     for (let i = 0, l = buffer.length; i < l; i++) {
       if (buffer[i] === splitByte) {
-        this.flushBuffer(buffer.slice(cursor, i));
+        this.flushBuffer(buffer.subarray(cursor, i));
         cursor = i + 1;
       }
     }
-    return buffer.slice(cursor);
+    return buffer.subarray(cursor);
   };
 }
 
@@ -61,8 +61,8 @@ Node.js 'stream' API calls _transform and _flush:
 
 */
 export class Splitter extends Transform {
-  protected _buffer = new Buffer(0);
-  protected _encoding: string = null;
+  protected _buffer = Buffer.alloc(0);
+  protected _encoding: BufferEncoding = null;
 
   constructor(options?: SplitterOptions) {
     super(options);
@@ -77,7 +77,7 @@ export class Splitter extends Transform {
 
   /** calling this will call toString on all emitted chunks, instead of
   returning buffers. */
-  setEncoding(encoding: string): this {
+  setEncoding(encoding: BufferEncoding): this {
     this._encoding = encoding;
     return this;
   }
@@ -98,14 +98,14 @@ export class Splitter extends Transform {
     for (let i = 0, l = buffer.length; i < l; i++) {
       // smart handling of \r and \n
       if (buffer[i] === 13 || buffer[i] === 10) {
-        this.flushBuffer(buffer.slice(cursor, i));
+        this.flushBuffer(buffer.subarray(cursor, i));
         if (buffer[i] === 13 && buffer[i + 1] === 10) { // '\r\n'
           i++;
         }
         cursor = i + 1;
       }
     }
-    return buffer.slice(cursor);
+    return buffer.subarray(cursor);
   }
 
   /**
@@ -115,7 +115,7 @@ export class Splitter extends Transform {
   'buffer'.
   */
   _transform(chunk: Buffer,
-             encoding: string,
+             encoding: BufferEncoding,
              callback: (error?: Error, outputChunk?: any) => void): void {
     // assert encoding == 'buffer'
     const buffer = Buffer.concat([this._buffer, chunk]);

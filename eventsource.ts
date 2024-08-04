@@ -23,7 +23,7 @@ export class EventSource extends Transform {
   }
 
   _transform(chunk: any,
-             encoding: string,
+             encoding: BufferEncoding,
              callback: (error?: Error, outputChunk?: any) => void) {
     // encoding may be something weird like "buffer" if chunk is just a string
     callback(null, `data: ${chunk.toString()}\n\n`);

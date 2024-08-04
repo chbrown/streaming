@@ -23,7 +23,7 @@ export class Batcher<T> extends Transform {
   }
 
   _transform(chunk: T,
-             encoding: string,
+             encoding: BufferEncoding,
              callback: (error?: Error, outputChunk?: T[]) => void) {
     this.batchBuffer.push(chunk);
     this.checkFlush(false, callback);

@@ -7,7 +7,7 @@ export class Picker extends Transform {
   }
 
   _transform(chunk: any,
-             encoding: string,
+             encoding: BufferEncoding,
              callback: (error?: Error, outputChunk?: any) => void) {
     const filtered = {};
     for (let i = 0; i < this.fields.length; i++) {
@@ -29,7 +29,7 @@ export class Omitter extends Transform {
   }
 
   _transform(chunk: any,
-             encoding: string,
+             encoding: BufferEncoding,
              callback: (error?: Error, outputChunk?: any) => void) {
     for (let field in this.fieldsMap) {
       delete chunk[field];

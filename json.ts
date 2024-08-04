@@ -40,7 +40,7 @@ export class ArrayStringifier extends Transform {
   }
 
   _transform(chunk: any,
-             encoding: string,
+             encoding: BufferEncoding,
              callback: (error?: Error, outputChunk?: any) => void): void {
     if (this._seenFirstItem) {
       this.push(',' + JSON.stringify(chunk, this.replacer, this.space));
@@ -77,7 +77,7 @@ export class Stringifier extends Transform {
   }
 
   _transform(chunk: any,
-             encoding: string,
+             encoding: BufferEncoding,
              callback: (error?: Error, outputChunk?: any) => void): void {
     this.push(JSON.stringify(chunk, this.replacer, this.space) + EOL); // , 'utf8'
     callback();
@@ -88,7 +88,7 @@ export class Stringifier extends Transform {
 dividing JSON objects. You shouldn't put a Splitter() in front of it.
 */
 export class Parser extends Transform {
-  protected _buffer: Buffer = new Buffer(0);
+  protected _buffer: Buffer = Buffer.alloc(0);
 
   constructor(protected replacer?: any, protected space?: string | number) {
     super();
@@ -128,12 +128,12 @@ export class Parser extends Transform {
       cursor++;
       if (eol) {
         // include the full EOL marker in the line chunk
-        this._line(this._buffer.slice(offset, cursor));
+        this._line(this._buffer.subarray(offset, cursor));
         offset = cursor;
       }
     }
 
-    this._buffer = this._buffer.slice(offset);
+    this._buffer = this._buffer.subarray(offset);
   }
 
   /**
@@ -141,7 +141,7 @@ export class Parser extends Transform {
   appease TypeScript, type assert that it's <any>
   */
   _transform(chunk: any,
-             encoding: string,
+             encoding: BufferEncoding,
              callback: (error?: Error, outputChunk?: any) => void): void {
     this._buffer = Buffer.concat([this._buffer, chunk]);
     this._processBuffer(false);

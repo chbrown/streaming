@@ -19,7 +19,7 @@ Example:
 */
 export class Transformer<T, R> extends Transform {
   constructor(transformFn: (chunk: T,
-                            encoding: string,
+                            encoding: BufferEncoding,
                             callback: (error?: Error, outputChunk?: R) => void) => void,
               options?: TransformOptions) {
     super(options);

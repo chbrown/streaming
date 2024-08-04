@@ -12,7 +12,7 @@ export class Sink extends Transform {
   }
 
   _transform(chunk: any,
-             encoding: string,
+             encoding: BufferEncoding,
              callback: (error?: Error, outputChunk?: any) => void) {
     callback();
   }

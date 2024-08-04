@@ -6,7 +6,7 @@ export class Filter<T> extends Transform {
   }
 
   _transform(chunk: T,
-             encoding: string,
+             encoding: BufferEncoding,
              callback: (error?: Error, outputChunk?: T) => void) {
     const success = this.testFn(chunk);
     if (success) {

@@ -43,7 +43,7 @@ export class VM<S, T> extends Transform {
   encoding should be null
   */
   _transform(chunk: S,
-             encoding: string,
+             encoding: BufferEncoding,
              callback: (error?: Error, outputChunk?: T) => void) {
     this.context.$in = chunk;
     this.context.$out = undefined;

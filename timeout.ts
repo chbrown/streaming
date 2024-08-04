@@ -27,7 +27,7 @@ export class Timeout extends Transform {
   }
 
   _transform(chunk: any,
-             encoding: string,
+             encoding: BufferEncoding,
              callback: (error?: Error, outputChunk?: any) => void): void {
     this.lastChunkReceived = (new Date()).getTime();
     this.push(chunk);

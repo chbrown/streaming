@@ -29,7 +29,7 @@ export class Queue extends Duplex {
 
   constructor(protected concurrency: number,
               protected transformFn: (chunk: any,
-                                      encoding: string,
+                                      encoding: BufferEncoding,
                                       callback: (error?: Error, outputChunk?: any) => void) => void,
               options?: DuplexOptions) {
     super(options);
@@ -51,7 +51,7 @@ export class Queue extends Duplex {
     // console.error('Queue._read called: %j', size);
   }
 
-  _write(chunk: any, encoding: string, callback: (error?: Error) => void) {
+  _write(chunk: any, encoding: BufferEncoding, callback: (error?: Error) => void) {
     // console.error('Queue._write called: %d', this._inProgress);
     this._inProgress++;
 
